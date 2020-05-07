@@ -30,3 +30,8 @@ for (i in 1:nrow(dates)){
   nueva_fila <- data.frame(Mes=c(dateActual),Porcentaje=c(porcentajeActual))
   df_dates <- rbind(df_dates,nueva_fila)
 }
+
+#Se grafica
+dates$percent = df_dates$Porcentaje
+dates$label = paste(df_dates$Mes," (",dates$percent,"%)",sep="")
+graph <- pie(dates$percent,labels=dates$label)
