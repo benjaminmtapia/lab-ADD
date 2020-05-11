@@ -1,6 +1,6 @@
 library(ggpubr)
 library(ggplot2)
-setwd("C:/Users/Maximiliano Arévalo/OneDrive/Escritorio/AnalisisDatos")
+setwd("C:/Users/Maximiliano Arï¿½valo/OneDrive/Escritorio/AnalisisDatos")
 #Soybean dataset
 data <- read.csv("soybean-large.data", header = FALSE, fill = TRUE)
 colnames(data) <- c("classname","date","plant-stand","precip","temp","hail","crop-hist","area-damaged","severity","seed-tmt","germination","plant-growth","leaves","leafspots-halo","leafspots-marg","leafspot-size","leaf-shread","leaf-malf","leaf-mild","stem","lodging","stem-cankers","canker-lesion","fruiting-bodies","external decay","mycelium","int-discolor","sclerotia","fruit-pods","fruit spots","seed","mold-growth","seed-discolor","seed-size","shriveling","roots")
