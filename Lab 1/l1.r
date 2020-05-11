@@ -1,3 +1,5 @@
+library(ggpubr)
+library(ggplot2)
 setwd("C:/Users/Maximiliano Arévalo/OneDrive/Escritorio/AnalisisDatos")
 #Soybean dataset
 data <- read.csv("soybean-large.data", header = FALSE, fill = TRUE)
@@ -30,3 +32,32 @@ for (i in 1:nrow(dates)){
   nueva_fila <- data.frame(Mes=c(dateActual),Porcentaje=c(porcentajeActual))
   df_dates <- rbind(df_dates,nueva_fila)
 }
+
+head(df_dates)
+
+plot.piechart<-function(
+  data,
+  x,
+  y,
+  xlabel,
+  ylabel,
+  title
+){
+  ggplot(data, aes(x=x, y=y, fill=x,label=y))+ 
+    geom_bar(width = 1, stat = "identity") +
+
+    scale_fill_brewer(palette="Set3") + 
+    ggtitle(title)+
+
+    labs(x=xlabel,y=ylabel)+
+    theme(panel.border = element_blank(),panel.background= element_blank())
+}
+
+
+plot.piechart(df_dates,df_dates$Mes,df_dates$Porcentaje,"x","Porcentaje","Grafico de Torta")
+
+ggarrange(
+  plot.piechart(df_dates,df_dates$Mes,df_dates$Porcentaje,"Mes","Porcentaje","Grafico 1"),
+  plot.piechart(df_dates,df_dates$Mes,df_dates$Porcentaje,"Mes","Porcentaje","Grafico 2"),
+  plot.piechart(df_dates,df_dates$Mes,df_dates$Porcentaje,"Mes","Porcentaje","Grafico 3")
+)
