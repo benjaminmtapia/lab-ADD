@@ -34,7 +34,7 @@ for (i in 1:nrow(dates)){
 }
 
 
-
+df_classname<- as.data.frame(table(data$classname))
 df_date<- as.data.frame(table(data$date))
 df_plant_stand<- as.data.frame(table(data$'plant-stand'))
 df_precip<- as.data.frame(table(data$precip))
@@ -74,7 +74,12 @@ df_seed_size<- as.data.frame(table(data$`seed-size`))
 df_shriveling<- as.data.frame(table(data$shriveling))
 df_roots<- as.data.frame(table(data$roots))
 
-
+#grafico de enfermedad segun temperatura
+gghist(df_temp,aes(Var1, fill = Freq)) +
+  geom_bar() +
+  xlab("Precio del auto") +
+  ylab("Numero total de precios") +
+  ggtitle("Distribución de precios segmentados por decisión")
 
 plot.barchart<-function(
   data,
@@ -92,11 +97,15 @@ plot.barchart<-function(
     theme(panel.border = element_blank(),panel.background= element_blank())
 }
 
+  
+p1<-  plot.barchart(df_date,df_date$Var1,df_date$Freq,"Mes","y","Date")
+
 #tablas de contingencia para las clases y cada caracteristica
 contingency.date <- table(data$classname,data$date)
 contingency.precip <- table(data$classname,data$precip)
 contingency.temp <- table(data$classname,data$temp)
 contingency.areadamaged <- table(data$classname,data$`area-damaged`)
+
 
 temp.chi<- chisq.test(contingency.temp,simulate.p.value = TRUE)
 areadamaged.chi<- chisq.test(contingency.areadamaged, simulate.p.value = TRUE)
