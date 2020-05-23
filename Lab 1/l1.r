@@ -1,6 +1,6 @@
 library(ggpubr)
 library(ggplot2)
-setwd("C:/Users/Maximiliano Arï¿½valo/OneDrive/Escritorio/AnalisisDatos")
+setwd("C:/Users/Maximiliano Arévalo/OneDrive/Escritorio/AnalisisDatos")
 #Soybean dataset
 data <- read.csv("soybean-large.data", header = FALSE, fill = TRUE)
 colnames(data) <- c("classname","date","plant-stand","precip","temp","hail","crop-hist","area-damaged","severity","seed-tmt","germination","plant-growth","leaves","leafspots-halo","leafspots-marg","leafspot-size","leaf-shread","leaf-malf","leaf-mild","stem","lodging","stem-cankers","canker-lesion","fruiting-bodies","external decay","mycelium","int-discolor","sclerotia","fruit-pods","fruit spots","seed","mold-growth","seed-discolor","seed-size","shriveling","roots")
@@ -105,6 +105,17 @@ contingency.date <- table(data$classname,data$date)
 contingency.precip <- table(data$classname,data$precip)
 contingency.temp <- table(data$classname,data$temp)
 contingency.areadamaged <- table(data$classname,data$`area-damaged`)
+
+#Tabla phytophthora-rot / precip
+pprecip<- as.data.frame(data[31:70,4])
+pprecip.table <- table(pprecip)
+chisq.test(pprecip.table,simulate.p.value = FALSE)
+
+#Tabla brown spot / crop hist
+bcrop <- as.data.frame(data[111:150,7])
+bcrop.table <- table(bcrop)
+chisq.test(bcrop.table,simulate.p.value = FALSE)
+#
 
 
 temp.chi<- chisq.test(contingency.temp,simulate.p.value = TRUE)
