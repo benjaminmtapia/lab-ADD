@@ -1,15 +1,9 @@
 library(ggpubr)
 library(ggplot2)
 #Soybean dataset
-data <- read.csv("soybean-large.data", header = FALSE, fill = TRUE)
+url <- "https://archive.ics.uci.edu/ml/machine-learning-databases/soybean/soybean-large.data"
+data <- read.csv(url, header = FALSE, fill = TRUE)
 colnames(data) <- c("classname","date","plant-stand","precip","temp","hail","crop-hist","area-damaged","severity","seed-tmt","germination","plant-growth","leaves","leafspots-halo","leafspots-marg","leafspot-size","leaf-shread","leaf-malf","leaf-mild","stem","lodging","stem-cankers","canker-lesion","fruiting-bodies","external decay","mycelium","int-discolor","sclerotia","fruit-pods","fruit spots","seed","mold-growth","seed-discolor","seed-size","shriveling","roots")
-
-#Se limpiaran los datos para eliminar los datos "?"
-#cleanData<-data[!(data$date=="?"),]
-#mean(cleanData$date, na.rm =TRUE)
-
-
-#Haremos los pasos requeridos para un caso particular (Date), luego debemos generalizarlo
 
 #Contruimos las tablas de y para los valores de las columnas
 dates = as.data.frame(table(data$date))
@@ -102,7 +96,7 @@ p5<-  plot.barchart(df_seed_size,df_seed_size$Var1,df_seed_size$Freq,"Tamaño","F
 p6 = ggplot(data, aes(x = date, fill = classname)) + geom_bar() + labs(x="Fecha",y="Frecuencia") 
 +ggtitle("Contingencia Enfermedad y Fecha")
 
-#Contingencia phytophthora-rot y precip 
+  #Contingencia phytophthora-rot y precip 
 p7<- barplot(pprecip.table,xlab="Precip",ylab="Casos phytophthora-rot")
 
 #Contingencia Brown-spot y crop hist
@@ -111,8 +105,12 @@ p8<- barplot(bcrop.table,xlab="Crop Hist",ylab="Casos Brown-spot")
 #Contingencia Temperatura y enfermedad
 p9<-ggplot(data,aes(x=classname,fill=temp)) + geom_bar()
 
+#Prueba de independencia
+#H0: independencia
+#H1: dependencia
 
-temp.chi<- chisq.test(contingency.temp,simulate.p.value = TRUE)
+date.chi<-chisq.test(contingency.date)
+temp.chi<- chisq.test(contingency.temp,simulate.p.value = FALSE)
 areadamaged.chi<- chisq.test(contingency.areadamaged, simulate.p.value = TRUE)
 pprecip.chi<-chisq.test(pprecip.table,simulate.p.value = FALSE)
 bcrop.chi<-chisq.test(bcrop.table,simulate.p.value = FALSE)
