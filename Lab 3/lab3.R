@@ -27,7 +27,8 @@ rules <- apriori(data,
                  parameter = list(support = support, minlen = 2, maxlen = 3, target = "rules"),
 )
 #No se agrega el print porque este muestra el resultado, se asigna a una variable y luego se muestra
-result_allRules <- inspect(sort(x=rules, decreasing = TRUE, by = "lift"))
+result_allRules <- sort(x=rules, decreasing = TRUE, by = "lift")
+result_allRulesData <- inspect(result_allRules)
 
 #10 mejores reglas segun el lift
 result_liftRanking <- inspect(head(result_allRules, n = 10, by = "lift"))
