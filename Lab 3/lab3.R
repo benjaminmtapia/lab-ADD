@@ -34,5 +34,10 @@ result_allRulesData <- inspect(result_allRules)
 result_liftRanking <- inspect(head(result_allRules, n = 10, by = "lift"))
 
 #Top 20 itemsets de mayor a menor soporte
-result_suppRanking <- sort(result_allRules, by = "support", decreasing = TRUE)[1:20]
-inspect(result_suppRanking) #Muestra casi todas con valores 1 de soporte, confianza, etc
+result_suppRanking <- sort(result_allRules, by = "support", decreasing = TRUE)#[1:20]
+result_suppRakingData <-inspect(result_suppRanking) #Muestra casi todas con valores 1 de soporte, confianza, etc
+
+#Itemsets mas frecuentes
+itemsets <- apriori(data ,
+                    parameter = list(support = support, minlen = 2, maxlen = 3, target = "frequent itemset"))
+result_itemsets <- inspect(itemsets)
