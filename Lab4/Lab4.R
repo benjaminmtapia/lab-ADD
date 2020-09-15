@@ -1,5 +1,7 @@
 library(ggplot2)
 library(ggpubr)
+library(rpart)
+library(rpart.plot)
 library("C50")
 library(caret)
 #Se obtiene la base de datos y se crea el dataframe
@@ -17,9 +19,15 @@ data <- dplyr::filter(data,
                       classname != 'diaporthe-pod-&-stem-blight')
 #Se eliminan columnas que contienen informacion detallada sobre otra variable
 data[13:19] <- NULL
-data$classname = as.factor(data$classname)
-training.index <- createDataPartition(data$classname, p=0.6)$Resample1
+data[3] <- NULL
+data[5] <- NULL
+data[8:27] <- NULL
+data <- subset(data, $precip)
+
+
+data$precip = as.factor(data$precip)
+training.index <- createDataPartition(data$precip, p=0.7)$Resample1
 training.set = data[training.index, ]
 test.set = data[-training.index, ]
-tree = C5.0(classname ~ ., training.set)
-tree.rules = C5.0(x = training.set[, -8], y = training.set$classname, rules = T)
+tree = C5.0(precip ~ ., training.set)
+tree.rules = C5.0(x = training.set[, -5], y = training.set$precip, rules = T)
