@@ -22,12 +22,15 @@ data[13:19] <- NULL
 data[3] <- NULL
 data[5] <- NULL
 data[8:27] <- NULL
-data <- subset(data, $precip)
-
-
-data$precip = as.factor(data$precip)
-training.index <- createDataPartition(data$precip, p=0.7)$Resample1
+data[7]<- NULL
+#data[5:6] <- NULL
+data <- data[1:46,]
+data$classname = as.factor(data$classname)
+training.index <- createDataPartition(data$classname, p=0.7)$Resample1
 training.set = data[training.index, ]
 test.set = data[-training.index, ]
-tree = C5.0(precip ~ ., training.set)
-tree.rules = C5.0(x = training.set[, -5], y = training.set$precip, rules = T)
+tree = C5.0(classname ~ ., training.set)
+tree.rules = C5.0(x = training.set[, -5], y = training.set$classname, rules = T)
+plot(tree)
+summary(tree)
+summary(tree.rules)
